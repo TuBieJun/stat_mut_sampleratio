@@ -1,0 +1,7 @@
+[package]
+name = "stat_germline_pos"
+version = "0.1.0"
+authors = ["liteng <707704459@qq.com>"]
+
+[dependencies]
+clap = "2.29.0"
