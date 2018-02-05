@@ -43,9 +43,9 @@ fn parse_vcf(vcf_l:&str, panel:&str, vcf_t:&str,
                 let mut fre:f64 = 0f64;
                 if vcf_t == "gatk" {
 
-                    dp_info = info_l[9].split('\t').collect();
+                    dp_info = info_l[9].split(':').collect();
                     depth = dp_info[3].parse().unwrap();
-                    let support_l:Vec<&str> = dp_info[1].split('\t').collect();
+                    let support_l:Vec<&str> = dp_info[1].split(',').collect();
                     support = support_l[1].parse().unwrap();
                     if support == 0 {
                         fre = 0f64;
@@ -164,16 +164,16 @@ fn main() {
     }
 
     if matches.is_present("exome") {
-        let panel509_list = matches.value_of("exome").unwrap();
-        let sample_num = parse_vcf(&panel509_list, "exome", "mutect", 
+        let exome_list = matches.value_of("exome").unwrap();
+        let sample_num = parse_vcf(&exome_list, "exome", "mutect", 
                   min_support, min_fre, min_depth, &mut D_germline);
         panel_list.push(String::from("exome"));
         sample_num_list.push(sample_num)
     }
 
     if matches.is_present("wgs") {
-        let panel509_list = matches.value_of("wgs").unwrap();
-        let sample_num = parse_vcf(&panel509_list, "wgs", "gatk", 
+        let wgs_list = matches.value_of("wgs").unwrap();
+        let sample_num = parse_vcf(&wgs_list, "wgs", "gatk", 
                   min_support, min_fre, min_depth, &mut D_germline);
         panel_list.push(String::from("wgs"));
         sample_num_list.push(sample_num)
